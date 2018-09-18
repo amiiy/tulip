@@ -1,3 +1,5 @@
+require('dotenv').config({path: __dirname + '/.env'});
+
 const path = require('path')
 
 const express = require('express')
@@ -13,7 +15,10 @@ const authRoutes = require('./routes/auth')
 const indexRouter = require('./routes')
 const storyRouter = require('./routes/story')
 
-mongoose.connect('mongodb://127.0.0.1:27017/tehran', { useNewUrlParser: true })
+const config = require('./config')
+
+console.log(config.mongodb.connectionString)
+mongoose.connect(config.mongodb.connectionString, { useNewUrlParser: true })
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 mongoose.connection.once('open', function () {
   console.log('we\'re connected!')
